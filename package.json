@@ -6,13 +6,21 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "react": "^18.2.0",
     "rxjs": "^7.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zpaceway/react-signals.git"
+  },
+  "author": "zpaceway",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zpaceway/react-signals/issues"
+  },
+  "homepage": "https://github.com/zpaceway/react-signals#readme"
 }
