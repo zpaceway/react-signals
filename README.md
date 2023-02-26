@@ -4,14 +4,17 @@ The simplest and easiest-to-use, TypeScript-first, state management solution for
 
 ## How to use it
 
-react-signals consists of only one single hook with 4 very important parameters.
+react-signals consists of only one single hook called `useSignal` with 3 very important parameters.
 
 - **name** (required): The identifier of the signal (If you use the helper function `createSignal` to generate the signal object, there's no need to set the name).
 - **initialValue** (required): Similar to `useState`, we provide an initial value for our signal.
 - **context** (optional): It can be used to group multiple signals and prevent collision, meaning that signals can have the same name between different contexts. If not provided or if the signal object is generated using the createSignal helper function, it will be set as "default" automatically.
-- **subscribe** (optional): It is set to `true` by default, if set to `false`, the component where the signal is mounted will not re-render automatically on changes. Very useful when you want to control your state more granularly and improve performance.
 
-The return type of the useSignal hook is an object with the following elements:
+You can also pass extra options to the `useSignal` hook, the options available are:
+
+- **subscribe** (optional): It is set to `true` by default, if set to `false`, the component where the signal is mounted will not receive updates from the signal on changes automatically (but other places where you are using your signal without setting subscribe as `false` will). Very useful when you want to control your state more granularly and improve performance.
+
+The return type of the `useSignal` hook is an object with the following elements:
 
 - **state**: The state of the signal.
 - **setState**: Sets the state of the current signal.
@@ -23,13 +26,21 @@ In this example, these separate individual components are listening to the same 
 You can also try out live a more advanced example by clicking [here.](https://codesandbox.io/p/sandbox/laughing-shape-xp5q5w?selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A2%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A2%7D%5D&file=%2Fsrc%2FApp.tsx)
 
 ```
-import { useSignal } from "@zpaceway/react-signals";
+import { useSignal, createSignal } from "@zpaceway/react-signals";
 
-const counterSignal = {
-  name: "counter",
-  context: "default",
+/**
+  The value of counterSignal would be something similar to:
+
+  {
+    name: "2e825f67-878e-445b-bff6-429196cb2d1d",
+    context: "default",
+    initialValue: 0,
+  }
+
+ */
+export const counterSignal = createSignal({
   initialValue: 0,
-};
+});
 
 const Counter1 = () => {
   const { state: count, setState: setCount } = useSignal(counterSignal);
@@ -60,10 +71,10 @@ const Counter2 = () => {
 };
 
 const Counter3 = () => {
-  const { state: count, detectChanges: detectCounterChanges } = useSignal({
-    ...counterSignal,
-    subscribe: false,
-  });
+  const { state: count, detectChanges: detectCounterChanges } = useSignal(
+    counterSignal,
+    { subscribe: false }
+  );
 
   return (
     <div style={{ margin: "20px 0" }}>
@@ -76,8 +87,7 @@ const Counter3 = () => {
 };
 
 const ResetCounter = () => {
-  const { reset: resetCounters } = useSignal({
-    ...counterSignal,
+  const { reset: resetCounters } = useSignal(counterSignal, {
     subscribe: false,
   });
 
