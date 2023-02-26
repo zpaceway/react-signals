@@ -23,7 +23,7 @@ interface UseSignalProps<T> {
   defaultValue: T;
 }
 
-export const useSignal = <T,>({
+export const useSignal = <T>({
   name,
   context = "default",
   defaultValue,
@@ -36,11 +36,11 @@ export const useSignal = <T,>({
   );
 
   useEffect(() => {
-    update$.current.subscribe((next) => {
+    const subscription = update$.current.subscribe((next) => {
       setState(next);
     });
 
-    () => update$.current.unsubscribe();
+    () => subscription.unsubscribe();
   }, [setState]);
 
   useEffect(() => {
