@@ -6,17 +6,17 @@ class Polaris {
 
   static getOrCreateSignal<T>(name: string, context: string, defaultValue: T) {
     const path = `${context}/${name}`;
-    let signal = this.signals[path] as BehaviorSubject<T>;
+    let signal = this.signals[path];
     if (!signal) {
-      signal = new BehaviorSubject(defaultValue);
-      this.signals[path] = signal as BehaviorSubject<unknown>;
+      signal = new BehaviorSubject<unknown>(defaultValue);
+      this.signals[path] = signal;
     }
 
-    return signal;
+    return signal as BehaviorSubject<T>;
   }
 }
 
-type ReactSignalsReturnType<T> = [T, (newState: T) => void];
+type UseSignalReturnType<T> = [T, (newState: T) => void];
 
 interface UseSignalProps<T> {
   name: string;
@@ -28,7 +28,7 @@ export const useSignal = <T>({
   name,
   context = "default",
   defaultValue,
-}: UseSignalProps<T>): ReactSignalsReturnType<T> => {
+}: UseSignalProps<T>): UseSignalReturnType<T> => {
   const signal$ = useRef(
     Polaris.getOrCreateSignal<T>(name, context, defaultValue)
   );
