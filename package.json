@@ -1,7 +1,7 @@
 {
   "name": "@zpaceway/react-signals",
   "version": "1.0.6",
-  "description": "The most simple and easy to use state management system for react",
+  "description": "The simplest and easiest-to-use, TypeScript-first, state management solution for React.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
