@@ -18,10 +18,10 @@ const useSignal = ({ name, context = "default", defaultValue, }) => {
     const update$ = (0, react_1.useRef)(Polaris.getOrCreateSignal(name, context, defaultValue));
     const [state, setState] = (0, react_1.useState)(defaultValue || update$.current.getValue());
     (0, react_1.useEffect)(() => {
-        update$.current.subscribe((next) => {
+        const subscription = update$.current.subscribe((next) => {
             setState(next);
         });
-        () => update$.current.unsubscribe();
+        () => subscription.unsubscribe();
     }, [setState]);
     (0, react_1.useEffect)(() => {
         if (defaultValue !== undefined &&
