@@ -1,6 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { UseSignalProps, UseSignalReturnInterface } from "./interfaces";
+import { v4 as uuid4 } from "uuid";
+
 import Polaris from "./Polaris";
+
+export const createSignal = <T>({
+  context = "default",
+  initialValue,
+  subscribe = true,
+}: Omit<UseSignalProps<T>, "name">): UseSignalProps<T> => {
+  return {
+    name: uuid4(),
+    context,
+    initialValue,
+    subscribe,
+  };
+};
 
 export const useSignal = <T>({
   name,
