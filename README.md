@@ -18,7 +18,7 @@ The return type of the useSignal hook is an object with the following elements:
 - **reset**: Sets the state to the initial default value provided to the signal.
 - **detectChanges**: Forces change detection on the current signal. Useful when subscribe is set to false and you want to control manually change detection.
 
-In this example, these two separate components share the same state and synchronize between each other. There's no need for any setup, it just simply works!
+In this example, these separate individual components are listening to the same signal. There's no need for any extra setup, it just simply works!
 
 You can also try out live a more advanced example by clicking [here.](https://codesandbox.io/p/sandbox/laughing-shape-xp5q5w?selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A2%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A2%7D%5D&file=%2Fsrc%2FApp.tsx)
 
