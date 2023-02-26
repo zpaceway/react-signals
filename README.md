@@ -25,15 +25,17 @@ You can also try out live a more advanced example by clicking [here.](https://co
 ```
 import { useSignal } from "@zpaceway/react-signals";
 
+const counterSignal = {
+  name: "counter",
+  context: "default",
+  initialValue: 0,
+};
+
 const Counter1 = () => {
-  const [count, setCount] = useSignal({
-    name: "counter",
-    context: "default",
-    initialValue: 0,
-  });
+  const { state: count, setState: setCount } = useSignal(counterSignal);
 
   return (
-    <div>
+    <div style={{ margin: "20px 0" }}>
       <div>{count}</div>
       <div>
         <button onClick={() => setCount(count + 1)}>+</button>
@@ -44,14 +46,10 @@ const Counter1 = () => {
 };
 
 const Counter2 = () => {
-  const [count, setCount] = useSignal({
-    name: "counter",
-    context: "default",
-    initialValue: 0,
-  });
+  const { state: count, setState: setCount } = useSignal(counterSignal);
 
   return (
-    <div>
+    <div style={{ margin: "20px 0" }}>
       <div>{count}</div>
       <div>
         <button onClick={() => setCount(count + 1)}>+</button>
@@ -61,11 +59,42 @@ const Counter2 = () => {
   );
 };
 
+const Counter3 = () => {
+  const { state: count, detectChanges: detectCounterChanges } = useSignal({
+    ...counterSignal,
+    subscribe: false,
+  });
+
+  return (
+    <div style={{ margin: "20px 0" }}>
+      <div>{count}</div>
+      <div>
+        <button onClick={detectCounterChanges}>Detect counter changes</button>
+      </div>
+    </div>
+  );
+};
+
+const ResetCounter = () => {
+  const { reset: resetCounters } = useSignal({
+    ...counterSignal,
+    subscribe: false,
+  });
+
+  return (
+    <div style={{ margin: "20px 0" }}>
+      <button onClick={resetCounters}>reset counters</button>
+    </div>
+  );
+};
+
 const App = () => {
   return (
     <div>
       <Counter1 />
       <Counter2 />
+      <Counter3 />
+      <ResetCounter />
     </div>
   );
 };
