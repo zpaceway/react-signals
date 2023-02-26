@@ -6,12 +6,13 @@ import type {
   UseSignalReturnInterface,
 } from "./interfaces";
 import Polaris from "./Polaris";
+import { uuid4 } from "./utils";
 
 export const createSignal = <T>({
   initialValue,
 }: CreateSignalProps<T>): UseSignalProps<T> => {
   return {
-    name: crypto.randomUUID(),
+    name: uuid4(),
     context: "default",
     initialValue,
   };
