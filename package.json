@@ -1,6 +1,6 @@
 {
   "name": "@zpaceway/react-signals",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "The simplest and easiest-to-use, TypeScript-first, state management solution for React.",
   "main": "index.js",
   "scripts": {
@@ -23,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/zpaceway/react-signals/issues"
   },
-  "homepage": "https://github.com/zpaceway/react-signals#readme"
+  "homepage": "https://github.com/zpaceway/react-signals#readme",
+  "keywords": [
+    "react",
+    "signal",
+    "blazingly",
+    "fast"
+  ]
 }
