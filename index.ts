@@ -28,15 +28,17 @@ export const useSignal = <T>({
   context = "default",
   defaultValue,
 }: UseSignalProps<T>): ReactSignalsReturnType<T> => {
-  const update$ = useRef(
+  const signal$ = useRef(
     Polaris.getOrCreateSignal<T>(name, context, defaultValue)
   );
   const [state, setState] = useState(
-    defaultValue || update$.current.getValue()
+    signal$.current.getValue() !== undefined
+      ? signal$.current.getValue()
+      : defaultValue
   );
 
   useEffect(() => {
-    const subscription = update$.current.subscribe((next) => {
+    const subscription = signal$.current.subscribe((next) => {
       setState(next);
     });
 
@@ -46,16 +48,16 @@ export const useSignal = <T>({
   useEffect(() => {
     if (
       defaultValue !== undefined &&
-      update$.current.getValue() === undefined
+      signal$.current.getValue() === undefined
     ) {
-      update$.current.next(defaultValue);
+      signal$.current.next(defaultValue);
     }
   }, []);
 
   return [
     () => state,
     (newState: T) => {
-      update$.current.next(newState);
+      signal$.current.next(newState);
     },
   ];
 };
