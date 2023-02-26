@@ -6,9 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useSignal = exports.createSignal = void 0;
 const react_1 = require("react");
 const Polaris_1 = __importDefault(require("./Polaris"));
+const utils_1 = require("./utils");
 const createSignal = ({ initialValue, }) => {
     return {
-        name: crypto.randomUUID(),
+        name: (0, utils_1.uuid4)(),
         context: "default",
         initialValue,
     };
