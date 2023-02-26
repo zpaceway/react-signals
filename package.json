@@ -1,6 +1,6 @@
 {
   "name": "@zpaceway/react-signals",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "The simplest and easiest-to-use, TypeScript-first, state management solution for React.",
   "main": "index.js",
   "scripts": {
@@ -8,12 +8,10 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "rxjs": "^7.8.0",
-    "uuid": "^9.0.0"
+    "rxjs": "^7.8.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
-    "@types/uuid": "^9.0.1",
     "typescript": "^4.9.5"
   },
   "repository": {

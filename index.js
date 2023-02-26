@@ -5,11 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useSignal = exports.createSignal = void 0;
 const react_1 = require("react");
-const uuid_1 = require("uuid");
 const Polaris_1 = __importDefault(require("./Polaris"));
 const createSignal = ({ initialValue, }) => {
     return {
-        name: (0, uuid_1.v4)(),
+        name: crypto.randomUUID(),
         context: "default",
         initialValue,
     };
