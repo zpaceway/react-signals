@@ -4,11 +4,11 @@ import { BehaviorSubject } from "rxjs";
 class Polaris {
   static signals: Record<string, BehaviorSubject<unknown>> = {};
 
-  static getOrCreateSignal<T>(name: string, context: string, defaultValue: T) {
+  static getOrCreateSignal<T>(name: string, context: string, initialValue: T) {
     const path = `${context}/${name}`;
     let signal = this.signals[path];
     if (!signal) {
-      signal = new BehaviorSubject<unknown>(defaultValue);
+      signal = new BehaviorSubject<unknown>(initialValue);
       this.signals[path] = signal;
     }
 
@@ -16,21 +16,21 @@ class Polaris {
   }
 }
 
-type UseSignalReturnType<T> = [T, (newState: T) => void];
+type UseSignalReturnType<T> = [T, (newState: T) => void, () => void];
 
 interface UseSignalProps<T> {
   name: string;
   context?: string;
-  defaultValue: T;
+  initialValue: T;
 }
 
 export const useSignal = <T>({
   name,
   context = "default",
-  defaultValue,
+  initialValue,
 }: UseSignalProps<T>): UseSignalReturnType<T> => {
   const signal$ = useRef(
-    Polaris.getOrCreateSignal<T>(name, context, defaultValue)
+    Polaris.getOrCreateSignal<T>(name, context, initialValue)
   );
   const [state, setState] = useState(signal$.current.getValue());
 
@@ -44,17 +44,20 @@ export const useSignal = <T>({
 
   useEffect(() => {
     if (
-      defaultValue !== undefined &&
+      initialValue !== undefined &&
       signal$.current.getValue() === undefined
     ) {
-      signal$.current.next(defaultValue);
+      signal$.current.next(initialValue);
     }
   }, []);
+
+  const restart = () => signal$.current.next(initialValue);
 
   return [
     state,
     (newState: T) => {
       signal$.current.next(newState);
     },
+    restart,
   ];
 };

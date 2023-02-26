@@ -7,7 +7,7 @@ The simplest and easiest-to-use, TypeScript-first, state management solution for
 react-signals consists of only one single hook with 3 very important parameters.
 
 - **_name_** (required): The identifier of the signal.
-- **_defaultValue_** (required): Similar to `useState`, we provide a default value for our signal.
+- **_initialValue_** (required): Similar to `useState`, we provide a default value for our signal.
 - **_context_** (optional): It can be used to group multiple signals and prevent collision, meaning that signals can have the same name between different contexts. If not provided, it will be set as "default" automatically.
 
 In this example, these two separate components share the same state and synchronize between each other. There's no need for any setup, it just simply works!
@@ -21,7 +21,7 @@ const Counter1 = () => {
   const [count, setCount] = useSignal({
     name: "counter",
     context: "default",
-    defaultValue: 0,
+    initialValue: 0,
   });
 
   return (
@@ -39,7 +39,7 @@ const Counter2 = () => {
   const [count, setCount] = useSignal({
     name: "counter",
     context: "default",
-    defaultValue: 0,
+    initialValue: 0,
   });
 
   return (
