@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { BehaviorSubject } from "rxjs";
 
 class Polaris {
-  static signals = {} as Record<string, BehaviorSubject<any>>;
+  static signals: Record<string, BehaviorSubject<unknown>> = {};
 
   static getOrCreateSignal<T>(name: string, context: string, defaultValue: T) {
     const path = `${context}/${name}`;
     let signal = this.signals[path] as BehaviorSubject<T>;
     if (!signal) {
-      signal = new BehaviorSubject<T>(defaultValue);
-      this.signals[path] = signal;
+      signal = new BehaviorSubject(defaultValue);
+      this.signals[path] = signal as BehaviorSubject<unknown>;
     }
 
     return signal;
@@ -32,11 +32,7 @@ export const useSignal = <T>({
   const signal$ = useRef(
     Polaris.getOrCreateSignal<T>(name, context, defaultValue)
   );
-  const [state, setState] = useState(
-    signal$.current.getValue() !== undefined
-      ? signal$.current.getValue()
-      : defaultValue
-  );
+  const [state, setState] = useState(signal$.current.getValue());
 
   useEffect(() => {
     const subscription = signal$.current.subscribe((next) => {

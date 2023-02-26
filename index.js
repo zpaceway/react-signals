@@ -17,9 +17,7 @@ class Polaris {
 Polaris.signals = {};
 const useSignal = ({ name, context = "default", defaultValue, }) => {
     const signal$ = (0, react_1.useRef)(Polaris.getOrCreateSignal(name, context, defaultValue));
-    const [state, setState] = (0, react_1.useState)(signal$.current.getValue() !== undefined
-        ? signal$.current.getValue()
-        : defaultValue);
+    const [state, setState] = (0, react_1.useState)(signal$.current.getValue());
     (0, react_1.useEffect)(() => {
         const subscription = signal$.current.subscribe((next) => {
             setState(next);
