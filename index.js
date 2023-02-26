@@ -15,14 +15,16 @@ class Polaris {
     }
 }
 Polaris.signals = {};
-const useSignal = ({ name, context = "default", initialValue, }) => {
+const useSignal = ({ name, context = "default", initialValue, subscribe = true, }) => {
     const signal$ = (0, react_1.useRef)(Polaris.getOrCreateSignal(name, context, initialValue));
     const [state, setState] = (0, react_1.useState)(signal$.current.getValue());
     (0, react_1.useEffect)(() => {
-        const subscription = signal$.current.subscribe((next) => {
-            setState(next);
-        });
-        return () => subscription.unsubscribe();
+        if (subscribe) {
+            const subscription = signal$.current.subscribe((next) => {
+                setState(next);
+            });
+            return () => subscription.unsubscribe();
+        }
     }, [setState]);
     (0, react_1.useEffect)(() => {
         if (initialValue !== undefined &&
@@ -30,13 +32,15 @@ const useSignal = ({ name, context = "default", initialValue, }) => {
             signal$.current.next(initialValue);
         }
     }, []);
-    const restart = () => signal$.current.next(initialValue);
-    return [
+    const reset = (0, react_1.useCallback)(() => signal$.current.next(initialValue), []);
+    const detectChanges = (0, react_1.useCallback)(() => setState(signal$.current.getValue()), [setState]);
+    return {
         state,
-        (newState) => {
+        setState: (newState) => {
             signal$.current.next(newState);
         },
-        restart,
-    ];
+        reset,
+        detectChanges,
+    };
 };
 exports.useSignal = useSignal;

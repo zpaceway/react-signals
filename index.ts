@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { BehaviorSubject } from "rxjs";
 
 class Polaris {
@@ -16,30 +16,40 @@ class Polaris {
   }
 }
 
-type UseSignalReturnType<T> = [T, (newState: T) => void, () => void];
+type UseSignalReturnType<T> = {
+  state: T;
+  setState: (newState: T) => void;
+  reset: () => void;
+  detectChanges: () => void;
+};
 
 interface UseSignalProps<T> {
   name: string;
   context?: string;
   initialValue: T;
+  subscribe?: boolean;
 }
 
 export const useSignal = <T>({
   name,
   context = "default",
   initialValue,
+  subscribe = true,
 }: UseSignalProps<T>): UseSignalReturnType<T> => {
   const signal$ = useRef(
     Polaris.getOrCreateSignal<T>(name, context, initialValue)
   );
+
   const [state, setState] = useState(signal$.current.getValue());
 
   useEffect(() => {
-    const subscription = signal$.current.subscribe((next) => {
-      setState(next);
-    });
+    if (subscribe) {
+      const subscription = signal$.current.subscribe((next) => {
+        setState(next);
+      });
 
-    return () => subscription.unsubscribe();
+      return () => subscription.unsubscribe();
+    }
   }, [setState]);
 
   useEffect(() => {
@@ -51,13 +61,18 @@ export const useSignal = <T>({
     }
   }, []);
 
-  const restart = () => signal$.current.next(initialValue);
+  const reset = useCallback(() => signal$.current.next(initialValue), []);
+  const detectChanges = useCallback(
+    () => setState(signal$.current.getValue()),
+    [setState]
+  );
 
-  return [
+  return {
     state,
-    (newState: T) => {
+    setState: (newState: T) => {
       signal$.current.next(newState);
     },
-    restart,
-  ];
+    reset,
+    detectChanges,
+  };
 };

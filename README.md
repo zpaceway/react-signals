@@ -4,11 +4,19 @@ The simplest and easiest-to-use, TypeScript-first, state management solution for
 
 ## How to use it
 
-react-signals consists of only one single hook with 3 very important parameters.
+react-signals consists of only one single hook with 4 very important parameters.
 
-- **_name_** (required): The identifier of the signal.
-- **_initialValue_** (required): Similar to `useState`, we provide a default value for our signal.
-- **_context_** (optional): It can be used to group multiple signals and prevent collision, meaning that signals can have the same name between different contexts. If not provided, it will be set as "default" automatically.
+- **name** (required): The identifier of the signal.
+- **initialValue** (required): Similar to `useState`, we provide an initial value for our signal.
+- **context** (optional): It can be used to group multiple signals and prevent collision, meaning that signals can have the same name between different contexts. If not provided, it will be set as "default" automatically.
+- **subscribe** (optional): It is set to `true` by default, if set to `false`, the component where the signal is mounted will not re-render automatically on changes. Very useful when you want to control your state more granularly and improve performance.
+
+The return type of the useSignal hook is an object with the following elements:
+
+- **state**: The state of the signal.
+- **setState**: Sets the state of the current signal.
+- **reset**: Sets the state to the initial default value provided to the signal.
+- **detectChanges**: Forces change detection on the current signal. Useful when subscribe is set to false and you want to control manually change detection.
 
 In this example, these two separate components share the same state and synchronize between each other. There's no need for any setup, it just simply works!
 
