@@ -5,10 +5,11 @@ const react_1 = require("react");
 const rxjs_1 = require("rxjs");
 class Polaris {
     static getOrCreateSignal(name, context, defaultValue) {
-        let signal = this.signals[`${name}/${context}`];
+        const path = `${context}/${name}`;
+        let signal = this.signals[path];
         if (!signal) {
             signal = new rxjs_1.BehaviorSubject(defaultValue);
-            this.signals[`${name}/${context}`] = signal;
+            this.signals[path] = signal;
         }
         return signal;
     }

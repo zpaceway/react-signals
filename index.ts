@@ -5,10 +5,11 @@ class Polaris {
   static signals = {} as Record<string, BehaviorSubject<any>>;
 
   static getOrCreateSignal<T>(name: string, context: string, defaultValue: T) {
-    let signal = this.signals[`${name}/${context}`] as BehaviorSubject<T>;
+    const path = `${context}/${name}`;
+    let signal = this.signals[path] as BehaviorSubject<T>;
     if (!signal) {
       signal = new BehaviorSubject<T>(defaultValue);
-      this.signals[`${name}/${context}`] = signal;
+      this.signals[path] = signal;
     }
 
     return signal;
