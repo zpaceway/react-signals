@@ -15,7 +15,7 @@ class Polaris {
   }
 }
 
-type ReactSignalsReturnType<T> = [() => T, (newState: T) => void];
+type ReactSignalsReturnType<T> = [T, (newState: T) => void];
 
 interface UseSignalProps<T> {
   name: string;
@@ -55,7 +55,7 @@ export const useSignal = <T>({
   }, []);
 
   return [
-    () => state,
+    state,
     (newState: T) => {
       signal$.current.next(newState);
     },

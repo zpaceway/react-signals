@@ -32,7 +32,7 @@ const useSignal = ({ name, context = "default", defaultValue, }) => {
         }
     }, []);
     return [
-        () => state,
+        state,
         (newState) => {
             signal$.current.next(newState);
         },
