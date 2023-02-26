@@ -40,7 +40,7 @@ export const useSignal = <T>({
       setState(next);
     });
 
-    () => subscription.unsubscribe();
+    return () => subscription.unsubscribe();
   }, [setState]);
 
   useEffect(() => {

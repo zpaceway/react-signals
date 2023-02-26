@@ -21,7 +21,7 @@ const useSignal = ({ name, context = "default", defaultValue, }) => {
         const subscription = update$.current.subscribe((next) => {
             setState(next);
         });
-        () => subscription.unsubscribe();
+        return () => subscription.unsubscribe();
     }, [setState]);
     (0, react_1.useEffect)(() => {
         if (defaultValue !== undefined &&

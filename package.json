@@ -1,6 +1,6 @@
 {
   "name": "@zpaceway/react-signals",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The most simple and easy to use state management system for react",
   "main": "index.js",
   "scripts": {
