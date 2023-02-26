@@ -5,6 +5,10 @@ export interface UseSignalReturnInterface<T> {
   detectChanges: () => void;
 }
 
+export interface CreateSignalProps<T> {
+  initialValue: T;
+}
+
 export interface UseSignalProps<T> {
   name: string;
   context?: string;
