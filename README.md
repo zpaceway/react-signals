@@ -18,36 +18,36 @@ You can also try it live by clicking [here.](https://codesandbox.io/p/sandbox/la
 import { useSignal } from "@zpaceway/react-signals";
 
 const Counter1 = () => {
-  const [getCount, setCount] = useSignal({
+  const [count, setCount] = useSignal({
     name: "counter",
-    defaultValue: 0,
     context: "default",
+    defaultValue: 0,
   });
 
   return (
     <div>
-      <div>{getCount()}</div>
+      <div>{count}</div>
       <div>
-        <button onClick={() => setCount(getCount() + 1)}>+</button>
-        <button onClick={() => setCount(getCount() - 1)}>-</button>
+        <button onClick={() => setCount(count + 1)}>+</button>
+        <button onClick={() => setCount(count - 1)}>-</button>
       </div>
     </div>
   );
 };
 
 const Counter2 = () => {
-  const [getCount, setCount] = useSignal({
+  const [count, setCount] = useSignal({
     name: "counter",
-    defaultValue: 0,
     context: "default",
+    defaultValue: 0,
   });
 
   return (
     <div>
-      <div>{getCount()}</div>
+      <div>{count}</div>
       <div>
-        <button onClick={() => setCount(getCount() + 1)}>+</button>
-        <button onClick={() => setCount(getCount() - 1)}>-</button>
+        <button onClick={() => setCount(count + 1)}>+</button>
+        <button onClick={() => setCount(count - 1)}>-</button>
       </div>
     </div>
   );
@@ -63,7 +63,6 @@ const App = () => {
 };
 
 export default App;
-
 ```
 
 ## Why you should use react-signals
