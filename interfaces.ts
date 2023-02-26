@@ -9,5 +9,8 @@ export interface UseSignalProps<T> {
   name: string;
   context?: string;
   initialValue: T;
-  subscribe?: boolean;
+}
+
+export interface UseSignalOptions {
+  subscribe: boolean;
 }

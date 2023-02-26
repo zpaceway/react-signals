@@ -6,9 +6,9 @@ The simplest and easiest-to-use, TypeScript-first, state management solution for
 
 react-signals consists of only one single hook with 4 very important parameters.
 
-- **name** (required): The identifier of the signal.
+- **name** (required): The identifier of the signal (If you use the helper function `createSignal` to generate the signal object, there's no need to set the name).
 - **initialValue** (required): Similar to `useState`, we provide an initial value for our signal.
-- **context** (optional): It can be used to group multiple signals and prevent collision, meaning that signals can have the same name between different contexts. If not provided, it will be set as "default" automatically.
+- **context** (optional): It can be used to group multiple signals and prevent collision, meaning that signals can have the same name between different contexts. If not provided or if the signal object is generated using the createSignal helper function, it will be set as "default" automatically.
 - **subscribe** (optional): It is set to `true` by default, if set to `false`, the component where the signal is mounted will not re-render automatically on changes. Very useful when you want to control your state more granularly and improve performance.
 
 The return type of the useSignal hook is an object with the following elements:

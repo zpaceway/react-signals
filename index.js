@@ -7,20 +7,19 @@ exports.useSignal = exports.createSignal = void 0;
 const react_1 = require("react");
 const uuid_1 = require("uuid");
 const Polaris_1 = __importDefault(require("./Polaris"));
-const createSignal = ({ context = "default", initialValue, subscribe = true, }) => {
+const createSignal = ({ initialValue, }) => {
     return {
         name: (0, uuid_1.v4)(),
-        context,
+        context: "default",
         initialValue,
-        subscribe,
     };
 };
 exports.createSignal = createSignal;
-const useSignal = ({ name, context = "default", initialValue, subscribe = true, }) => {
+const useSignal = ({ name, context = "default", initialValue }, options = { subscribe: true }) => {
     const signal$ = (0, react_1.useRef)(Polaris_1.default.getOrCreateSignal(name, context, initialValue));
     const [state, setState] = (0, react_1.useState)(signal$.current.getValue());
     (0, react_1.useEffect)(() => {
-        if (subscribe) {
+        if (options.subscribe) {
             const subscription = signal$.current.subscribe((next) => {
                 setState(next);
             });
