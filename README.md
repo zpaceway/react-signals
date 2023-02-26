@@ -12,7 +12,7 @@ react-signals consists of only one single hook with 3 very important parameters.
 
 In this example, these two separate components share the same state and synchronize between each other. There's no need for any setup, it just simply works!
 
-You can also try it live by clicking [here.](https://codesandbox.io/p/sandbox/laughing-shape-xp5q5w?selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A2%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A2%7D%5D&file=%2Fsrc%2FApp.tsx)
+You can also try out live a more advanced example by clicking [here.](https://codesandbox.io/p/sandbox/laughing-shape-xp5q5w?selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A2%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A2%7D%5D&file=%2Fsrc%2FApp.tsx)
 
 ```
 import { useSignal } from "@zpaceway/react-signals";
