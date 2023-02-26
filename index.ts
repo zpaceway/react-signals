@@ -1,41 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { BehaviorSubject } from "rxjs";
-
-class Polaris {
-  static signals: Record<string, BehaviorSubject<unknown>> = {};
-
-  static getOrCreateSignal<T>(name: string, context: string, initialValue: T) {
-    const path = `${context}/${name}`;
-    let signal = this.signals[path];
-    if (!signal) {
-      signal = new BehaviorSubject<unknown>(initialValue);
-      this.signals[path] = signal;
-    }
-
-    return signal as BehaviorSubject<T>;
-  }
-}
-
-type UseSignalReturnType<T> = {
-  state: T;
-  setState: (newState: T) => void;
-  reset: () => void;
-  detectChanges: () => void;
-};
-
-interface UseSignalProps<T> {
-  name: string;
-  context?: string;
-  initialValue: T;
-  subscribe?: boolean;
-}
+import type { UseSignalProps, UseSignalReturnInterface } from "./interfaces";
+import Polaris from "./Polaris";
 
 export const useSignal = <T>({
   name,
   context = "default",
   initialValue,
   subscribe = true,
-}: UseSignalProps<T>): UseSignalReturnType<T> => {
+}: UseSignalProps<T>): UseSignalReturnInterface<T> => {
   const signal$ = useRef(
     Polaris.getOrCreateSignal<T>(name, context, initialValue)
   );

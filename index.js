@@ -1,22 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useSignal = void 0;
 const react_1 = require("react");
-const rxjs_1 = require("rxjs");
-class Polaris {
-    static getOrCreateSignal(name, context, initialValue) {
-        const path = `${context}/${name}`;
-        let signal = this.signals[path];
-        if (!signal) {
-            signal = new rxjs_1.BehaviorSubject(initialValue);
-            this.signals[path] = signal;
-        }
-        return signal;
-    }
-}
-Polaris.signals = {};
+const Polaris_1 = __importDefault(require("./Polaris"));
 const useSignal = ({ name, context = "default", initialValue, subscribe = true, }) => {
-    const signal$ = (0, react_1.useRef)(Polaris.getOrCreateSignal(name, context, initialValue));
+    const signal$ = (0, react_1.useRef)(Polaris_1.default.getOrCreateSignal(name, context, initialValue));
     const [state, setState] = (0, react_1.useState)(signal$.current.getValue());
     (0, react_1.useEffect)(() => {
         if (subscribe) {
