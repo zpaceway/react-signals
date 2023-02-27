@@ -1,8 +1,16 @@
+import { BehaviorSubject } from "rxjs";
+
 export interface UseSignalReturnInterface<T> {
   state: T;
   setState: (newState: T) => void;
   reset: () => void;
   detectChanges: () => void;
+}
+
+export interface LoadSignalReturnInterface<T> {
+  signal$: BehaviorSubject<T>;
+  setState: (newState: T) => void;
+  reset: () => void;
 }
 
 export interface CreateSignalProps<T> {

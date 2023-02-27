@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useSignal = exports.createSignal = void 0;
+exports.loadSignal = exports.useSignal = exports.createSignal = void 0;
 const react_1 = require("react");
 const Polaris_1 = __importDefault(require("./Polaris"));
 const utils_1 = require("./utils");
@@ -44,3 +44,18 @@ const useSignal = ({ name, context = "default", initialValue }, options = { subs
     };
 };
 exports.useSignal = useSignal;
+const loadSignal = ({ name, context = "default", initialValue, }) => {
+    const signal$ = Polaris_1.default.getOrCreateSignal(name, context, initialValue);
+    if (initialValue !== undefined && signal$.getValue() === undefined) {
+        signal$.next(initialValue);
+    }
+    const reset = () => signal$.next(initialValue);
+    return {
+        signal$,
+        setState: (newState) => {
+            signal$.next(newState);
+        },
+        reset,
+    };
+};
+exports.loadSignal = loadSignal;

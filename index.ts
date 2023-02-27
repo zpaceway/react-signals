@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type {
   CreateSignalProps,
+  LoadSignalReturnInterface,
   UseSignalOptions,
   UseSignalProps,
   UseSignalReturnInterface,
@@ -22,15 +23,15 @@ export const useSignal = <T>(
   { name, context = "default", initialValue }: UseSignalProps<T>,
   options: UseSignalOptions = { subscribe: true }
 ): UseSignalReturnInterface<T> => {
-  const signal$ = useRef(
+  const signalRef$ = useRef(
     Polaris.getOrCreateSignal<T>(name, context, initialValue)
   );
 
-  const [state, setState] = useState(signal$.current.getValue());
+  const [state, setState] = useState(signalRef$.current.getValue());
 
   useEffect(() => {
     if (options.subscribe) {
-      const subscription = signal$.current.subscribe((next) => {
+      const subscription = signalRef$.current.subscribe((next) => {
         setState(next);
       });
 
@@ -41,24 +42,46 @@ export const useSignal = <T>(
   useEffect(() => {
     if (
       initialValue !== undefined &&
-      signal$.current.getValue() === undefined
+      signalRef$.current.getValue() === undefined
     ) {
-      signal$.current.next(initialValue);
+      signalRef$.current.next(initialValue);
     }
   }, []);
 
-  const reset = useCallback(() => signal$.current.next(initialValue), []);
+  const reset = useCallback(() => signalRef$.current.next(initialValue), []);
   const detectChanges = useCallback(
-    () => setState(signal$.current.getValue()),
+    () => setState(signalRef$.current.getValue()),
     [setState]
   );
 
   return {
     state,
     setState: (newState: T) => {
-      signal$.current.next(newState);
+      signalRef$.current.next(newState);
     },
     reset,
     detectChanges,
+  };
+};
+
+export const loadSignal = <T>({
+  name,
+  context = "default",
+  initialValue,
+}: UseSignalProps<T>): LoadSignalReturnInterface<T> => {
+  const signal$ = Polaris.getOrCreateSignal<T>(name, context, initialValue);
+
+  if (initialValue !== undefined && signal$.getValue() === undefined) {
+    signal$.next(initialValue);
+  }
+
+  const reset = () => signal$.next(initialValue);
+
+  return {
+    signal$,
+    setState: (newState: T) => {
+      signal$.next(newState);
+    },
+    reset,
   };
 };
