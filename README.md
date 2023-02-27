@@ -23,7 +23,7 @@ The return type of the `useSignal` hook is an object with the following elements
 
 In this example, these separate individual components are listening to the same signal. There's no need for any extra setup, it just simply works!
 
-You can also try out the live version of this example by clicking [here](https://codesandbox.io/p/sandbox/laughing-shape-xp5q5w?selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A2%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A2%7D%5D&file=%2Fsrc%2FApp.tsx), or you can visit the oficial github repo of this example [here.](https://github.com/zpaceway/react-signals-counter-example)
+You can also try out the live version of this example by clicking [here](https://codesandbox.io/p/github/zpaceway/react-signals-example/main), or you can visit the oficial github repo of this example [here.](https://github.com/zpaceway/react-signals-example)
 
 ```js
 import { useSignal, createSignal } from "@zpaceway/react-signals";
