@@ -26,9 +26,6 @@ In this example, these separate individual components are listening to the same 
 You can also try out the live version of this example by clicking [here](https://codesandbox.io/p/github/zpaceway/react-signals-example/main), or you can visit the oficial github repo of this example [here.](https://github.com/zpaceway/react-signals-example)
 
 ```js
-import { useSignal, createSignal } from "@zpaceway/react-signals";
-
-/**
 import { useSignal, createSignal, loadSignal } from "@zpaceway/react-signals";
 
 /**
