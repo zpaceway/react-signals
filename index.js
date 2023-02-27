@@ -16,11 +16,11 @@ const createSignal = ({ initialValue, }) => {
 };
 exports.createSignal = createSignal;
 const useSignal = ({ name, context = "default", initialValue }, options = { subscribe: true }) => {
-    const signal$ = (0, react_1.useRef)(Polaris_1.default.getOrCreateSignal(name, context, initialValue));
-    const [state, setState] = (0, react_1.useState)(signal$.current.getValue());
+    const signalRef$ = (0, react_1.useRef)(Polaris_1.default.getOrCreateSignal(name, context, initialValue));
+    const [state, setState] = (0, react_1.useState)(signalRef$.current.getValue());
     (0, react_1.useEffect)(() => {
         if (options.subscribe) {
-            const subscription = signal$.current.subscribe((next) => {
+            const subscription = signalRef$.current.subscribe((next) => {
                 setState(next);
             });
             return () => subscription.unsubscribe();
@@ -28,16 +28,16 @@ const useSignal = ({ name, context = "default", initialValue }, options = { subs
     }, [setState]);
     (0, react_1.useEffect)(() => {
         if (initialValue !== undefined &&
-            signal$.current.getValue() === undefined) {
-            signal$.current.next(initialValue);
+            signalRef$.current.getValue() === undefined) {
+            signalRef$.current.next(initialValue);
         }
     }, []);
-    const reset = (0, react_1.useCallback)(() => signal$.current.next(initialValue), []);
-    const detectChanges = (0, react_1.useCallback)(() => setState(signal$.current.getValue()), [setState]);
+    const reset = (0, react_1.useCallback)(() => signalRef$.current.next(initialValue), []);
+    const detectChanges = (0, react_1.useCallback)(() => setState(signalRef$.current.getValue()), [setState]);
     return {
         state,
         setState: (newState) => {
-            signal$.current.next(newState);
+            signalRef$.current.next(newState);
         },
         reset,
         detectChanges,
