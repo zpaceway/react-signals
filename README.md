@@ -25,29 +25,55 @@ In this example, these separate individual components are listening to the same 
 
 You can also try out the live version of this example by clicking [here](https://codesandbox.io/p/sandbox/laughing-shape-xp5q5w?selection=%5B%7B%22endColumn%22%3A1%2C%22endLineNumber%22%3A2%2C%22startColumn%22%3A1%2C%22startLineNumber%22%3A2%7D%5D&file=%2Fsrc%2FApp.tsx), or you can visit the oficial github repo of this example [here.](https://github.com/zpaceway/react-signals-counter-example)
 
-```
+```js
 import { useSignal, createSignal } from "@zpaceway/react-signals";
 
 /**
-  The value of counterSignal would be something similar to:
+import { useSignal, createSignal, loadSignal } from "@zpaceway/react-signals";
 
-  {
-    name: "2e825f67-878e-445b-bff6-429196cb2d1d",
-    context: "default",
-    initialValue: 0,
-  }
-
+/**
+ * The value of counterSignal would be something similar to:
+ *
+ * {
+ *   name: "2e825f67-878e-445b-bff6-429196cb2d1d",
+ *   context: "default",
+ *   initialValue: 0,
+ * }
+ *
  */
 export const counterSignal = createSignal({
   initialValue: 0,
 });
+
+/**
+ * You can set the state of your signal from outside
+ * of the component using loadSignal
+ */
+const {
+  signal$: count$,
+  setState: setCount,
+  reset: resetCounters,
+} = loadSignal(counterSignal);
+setCount(100);
+
+/**
+ * You can also get the value of your signal from outside of the
+ * component by using the signal$.getValue() function
+ */
+console.log(
+  `This value is loaded from outside of a component ${count$.getValue()}`
+);
 
 const Counter1 = () => {
   const { state: count, setState: setCount } = useSignal(counterSignal);
 
   return (
     <div style={{ margin: "20px 0" }}>
-      <div>{count}</div>
+      <div>
+        I'm the counter1 component with value:
+        <br />
+        {count}
+      </div>
       <div>
         <button onClick={() => setCount(count + 1)}>+</button>
         <button onClick={() => setCount(count - 1)}>-</button>
@@ -61,7 +87,11 @@ const Counter2 = () => {
 
   return (
     <div style={{ margin: "20px 0" }}>
-      <div>{count}</div>
+      <div>
+        I'm a counter2 component with value:
+        <br />
+        {count}
+      </div>
       <div>
         <button onClick={() => setCount(count + 1)}>+</button>
         <button onClick={() => setCount(count - 1)}>-</button>
@@ -78,7 +108,12 @@ const Counter3 = () => {
 
   return (
     <div style={{ margin: "20px 0" }}>
-      <div>{count}</div>
+      <div>
+        I'm the counter3 but my value does not update automatically, please
+        click on detect changes to update my value:
+        <br />
+        {count}
+      </div>
       <div>
         <button onClick={detectCounterChanges}>Detect counter changes</button>
       </div>
