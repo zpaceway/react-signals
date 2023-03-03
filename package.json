@@ -1,17 +1,23 @@
 {
   "name": "@zpaceway/react-signals",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "The simplest and easiest-to-use, TypeScript-first, state management solution for React.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "react": "^18.2.0",
     "rxjs": "^7.8.0"
   },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
   "devDependencies": {
-    "@types/react": "^18.0.28",
+    "@types/react": "^16.14.0",
     "typescript": "^4.9.5"
   },
   "repository": {
@@ -29,5 +35,8 @@
     "signal",
     "blazingly",
     "fast"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
