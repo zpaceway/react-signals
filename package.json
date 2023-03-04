@@ -1,6 +1,6 @@
 {
   "name": "@zpaceway/react-signals",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "description": "The simplest and easiest-to-use, TypeScript-first, state management solution for React.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
