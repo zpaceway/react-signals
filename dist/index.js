@@ -6,10 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.loadSignal = exports.useSignal = exports.createSignal = void 0;
 const react_1 = require("react");
 const Polaris_1 = __importDefault(require("./Polaris"));
-const utils_1 = require("./utils");
+const pseudoUuid = () => {
+    let random1 = new Date().getTime();
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (character) => {
+        let random2 = Math.random() * 16;
+        random2 = (random1 + random2) % 16 | 0;
+        random1 = Math.floor(random1 / 16);
+        return (character === "x" ? random2 : (random2 & 0x3) | 0x8).toString(16);
+    });
+};
 const createSignal = ({ initialValue, }) => {
     return {
-        name: (0, utils_1.uuid4)(),
+        name: pseudoUuid(),
         context: "default",
         initialValue,
     };
